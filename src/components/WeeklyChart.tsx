@@ -9,7 +9,20 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
+  type TooltipProps,
 } from "recharts";
+
+function SessionTooltip({ active, payload }: TooltipProps<number, string>) {
+  if (active && payload && payload.length) {
+    const value = payload[0].value as number;
+    return (
+      <div className="bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg">
+        <span className="font-semibold">{value}</span> focus session{value !== 1 ? "s" : ""}
+      </div>
+    );
+  }
+  return null;
+}
 
 interface Session {
   id: string;
@@ -67,15 +80,8 @@ export default function WeeklyChart({ sessions }: WeeklyChartProps) {
               allowDecimals={false}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: "#1e293b",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
-                fontSize: "13px",
-              }}
+              content={<SessionTooltip />}
               cursor={{ fill: "rgba(0,0,0,0.05)" }}
-              formatter={(value: number) => [`${value} session${value !== 1 ? "s" : ""}`, "Sessions"]}
             />
             <Bar dataKey="sessions" radius={[6, 6, 0, 0]} maxBarSize={40}>
               {data.map((entry, index) => (
