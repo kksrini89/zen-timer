@@ -56,15 +56,7 @@ export default function Timer({ onSessionComplete }: TimerProps) {
     }
   }, [soundEnabled, mode]);
 
-  const startTimer = useCallback(() => {
-    if (Notification.permission !== "granted" && Notification.permission !== "denied") {
-      Notification.requestPermission();
-    }
-
-    if (mode === "idle") {
-      setMode("focus");
-    }
-
+  const runTimer = useCallback(() => {
     setIsRunning(true);
     setShowComplete(false);
     intervalRef.current = setInterval(() => {
@@ -76,7 +68,19 @@ export default function Timer({ onSessionComplete }: TimerProps) {
         return prev - 1;
       });
     }, 1000);
-  }, [clearTimer, mode]);
+  }, [clearTimer]);
+
+  const startTimer = useCallback(() => {
+    if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+
+    if (mode === "idle") {
+      setMode("focus");
+    }
+
+    runTimer();
+  }, [runTimer, mode]);
 
   const pauseTimer = useCallback(() => {
     setIsRunning(false);
@@ -91,21 +95,35 @@ export default function Timer({ onSessionComplete }: TimerProps) {
     setShowComplete(false);
   }, [clearTimer]);
 
-  const startBreak = useCallback(() => {
-    setMode("break");
-    setSecondsLeft(DEFAULT_BREAK_MINUTES * 60);
-    setIsRunning(false);
-    setShowComplete(false);
-    clearTimer();
-  }, [clearTimer]);
+  const startBreak = useCallback(
+    (autoStart: boolean = false) => {
+      setMode("break");
+      setSecondsLeft(DEFAULT_BREAK_MINUTES * 60);
+      setShowComplete(false);
+      clearTimer();
+      if (autoStart) {
+        runTimer();
+      } else {
+        setIsRunning(false);
+      }
+    },
+    [clearTimer, runTimer]
+  );
 
-  const startFocus = useCallback(() => {
-    setMode("focus");
-    setSecondsLeft(DEFAULT_FOCUS_MINUTES * 60);
-    setIsRunning(false);
-    setShowComplete(false);
-    clearTimer();
-  }, [clearTimer]);
+  const startFocus = useCallback(
+    (autoStart: boolean = false) => {
+      setMode("focus");
+      setSecondsLeft(DEFAULT_FOCUS_MINUTES * 60);
+      setShowComplete(false);
+      clearTimer();
+      if (autoStart) {
+        runTimer();
+      } else {
+        setIsRunning(false);
+      }
+    },
+    [clearTimer, runTimer]
+  );
 
   // Handle timer completion
   useEffect(() => {
@@ -137,7 +155,7 @@ export default function Timer({ onSessionComplete }: TimerProps) {
       {/* Mode Selector */}
       <div className="flex gap-2 bg-muted p-1 rounded-lg">
         <button
-          onClick={startFocus}
+          onClick={() => startFocus()}
           className={cn(
             "px-4 py-2 rounded-md text-sm font-medium transition-colors",
             mode === "focus" || mode === "idle"
@@ -148,7 +166,7 @@ export default function Timer({ onSessionComplete }: TimerProps) {
           Focus
         </button>
         <button
-          onClick={startBreak}
+          onClick={() => startBreak()}
           className={cn(
             "px-4 py-2 rounded-md text-sm font-medium transition-colors",
             mode === "break"
@@ -250,7 +268,7 @@ export default function Timer({ onSessionComplete }: TimerProps) {
 
       {mode === "focus" && showComplete && (
         <button
-          onClick={startBreak}
+          onClick={() => startBreak(true)}
           className="flex items-center gap-2 px-5 py-2.5 bg-amber-100 text-amber-700 rounded-lg font-medium hover:bg-amber-200 transition-colors text-sm"
         >
           <Coffee className="w-4 h-4" />
@@ -260,11 +278,11 @@ export default function Timer({ onSessionComplete }: TimerProps) {
 
       {mode === "break" && showComplete && (
         <button
-          onClick={startFocus}
+          onClick={() => startFocus(true)}
           className="flex items-center gap-2 px-5 py-2.5 bg-emerald-100 text-emerald-700 rounded-lg font-medium hover:bg-emerald-200 transition-colors text-sm"
         >
           <Play className="w-4 h-4" />
-          Start New Focus Session
+          Start Focus Session
         </button>
       )}
     </div>
