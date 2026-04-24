@@ -5,5 +5,12 @@
     "durationMinutes": 30,
     "completedAt": "2026-04-23T02:31:38.463Z",
     "label": "Test"
+  },
+  {
+    "id": "39afba6d-2509-4f45-9baf-5a6e529210d5",
+    "date": "2026-04-23",
+    "durationMinutes": 30,
+    "completedAt": "2026-04-23T03:52:15.527Z",
+    "label": "Focus Session"
   }
 ]

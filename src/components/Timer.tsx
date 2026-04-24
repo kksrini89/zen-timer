@@ -271,13 +271,15 @@ export default function Timer({ onSessionComplete }: TimerProps) {
           </>
         )}
 
-        <button
-          onClick={resetTimer}
-          className="flex items-center gap-2 px-4 py-3 bg-muted text-foreground rounded-xl font-medium hover:bg-muted/80 transition-colors"
-          title="Reset"
-        >
-          <RotateCcw className="w-5 h-5" />
-        </button>
+        {!showComplete && (
+          <button
+            onClick={resetTimer}
+            className="flex items-center gap-2 px-4 py-3 bg-muted text-foreground rounded-xl font-medium hover:bg-muted/80 transition-colors"
+            title="Reset"
+          >
+            <RotateCcw className="w-5 h-5" />
+          </button>
+        )}
 
         <button
           onClick={() => setSoundEnabled(!soundEnabled)}
