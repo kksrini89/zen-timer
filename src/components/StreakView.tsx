@@ -26,7 +26,9 @@ export default function StreakView({ sessions }: StreakViewProps) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split("T")[0];
-      const count = sessions.filter((s) => s.date === dateStr).length;
+      const count = sessions.filter(
+        (s) => new Date(s.completedAt).toISOString().split("T")[0] === dateStr
+      ).length;
       const isToday = i === 0;
 
       result.push({
@@ -42,7 +44,9 @@ export default function StreakView({ sessions }: StreakViewProps) {
   const streak = useMemo(() => {
     let currentStreak = 0;
     const today = new Date().toISOString().split("T")[0];
-    const todayCount = sessions.filter((s) => s.date === today).length;
+    const todayCount = sessions.filter(
+      (s) => new Date(s.completedAt).toISOString().split("T")[0] === today
+    ).length;
 
     if (todayCount > 0) currentStreak++;
 
@@ -50,7 +54,9 @@ export default function StreakView({ sessions }: StreakViewProps) {
       const d = new Date();
       d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split("T")[0];
-      const count = sessions.filter((s) => s.date === dateStr).length;
+      const count = sessions.filter(
+        (s) => new Date(s.completedAt).toISOString().split("T")[0] === dateStr
+      ).length;
       if (count > 0) {
         currentStreak++;
       } else {
