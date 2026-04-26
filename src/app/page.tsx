@@ -139,12 +139,12 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
-          <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
+        <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col items-center justify-center text-center">
+          <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center mb-1">
             <TimerIcon className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-lg font-bold leading-tight">Focus Streak</h1>
+            <h1 className="text-lg font-bold leading-tight">Zen Timer</h1>
             <p className="text-xs text-muted-foreground">Build momentum, one session at a time</p>
           </div>
         </div>
@@ -153,10 +153,6 @@ export default function Home() {
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
         {/* Timer Section */}
         <section className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm">
-          <div className="flex items-center gap-2 mb-6">
-            <TimerIcon className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold">Focus Timer</h2>
-          </div>
           <Timer onSessionComplete={handleSessionComplete} />
         </section>
 
