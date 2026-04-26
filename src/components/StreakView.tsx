@@ -3,14 +3,7 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Zap } from "lucide-react";
-
-interface Session {
-  id: string;
-  date: string;
-  durationMinutes: number;
-  completedAt: string;
-  label?: string;
-}
+import { Session } from "@/lib/kv";
 
 interface StreakViewProps {
   sessions: Session[];

@@ -5,14 +5,7 @@ import { Timer as TimerIcon, TrendingUp, Calendar } from "lucide-react";
 import Timer from "@/components/Timer";
 import StreakView from "@/components/StreakView";
 import WeeklyChart from "@/components/WeeklyChart";
-
-interface Session {
-  id: string;
-  date: string;
-  durationMinutes: number;
-  completedAt: string;
-  label?: string;
-}
+import { Session } from "@/lib/kv";
 
 const STORAGE_KEY = "focus-streak-sessions";
 

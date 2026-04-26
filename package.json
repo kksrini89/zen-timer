@@ -6,9 +6,11 @@
     "dev": "next dev --port 3005",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:kv": "tsx scripts/seed-kv.ts"
   },
   "dependencies": {
+    "@vercel/kv": "^3.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.400.0",

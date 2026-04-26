@@ -11,6 +11,7 @@ import {
   Cell,
   type TooltipProps,
 } from "recharts";
+import { Session } from "@/lib/kv";
 
 function SessionTooltip({ active, payload }: TooltipProps<number, string>) {
   if (active && payload && payload.length) {
@@ -22,14 +23,6 @@ function SessionTooltip({ active, payload }: TooltipProps<number, string>) {
     );
   }
   return null;
-}
-
-interface Session {
-  id: string;
-  date: string;
-  durationMinutes: number;
-  completedAt: string;
-  label?: string;
 }
 
 interface WeeklyChartProps {
