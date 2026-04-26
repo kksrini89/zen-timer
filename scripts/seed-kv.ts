@@ -3,13 +3,13 @@ import fs from "fs/promises";
 
 const kv = createClient({
   url: process.env.KV_REST_API_URL || process.env.KV_URL,
-  token: process.env.KV_REST_API_TOKEN || process.env.KV_REST_API_READ_ONLY_TOKEN,
+  token: process.env.KV_REST_API_TOKEN,
 });
 
 async function seed() {
   const raw = await fs.readFile("./data/sessions.json", "utf-8");
   const sessions = JSON.parse(raw);
-  await kv.set("sessions", JSON.stringify(sessions));
+  await kv.set("sessions", sessions);
   console.log(`Seeded ${sessions.length} sessions into KV`);
   process.exit(0);
 }
